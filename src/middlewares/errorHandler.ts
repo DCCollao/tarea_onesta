@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => {
     console.error(err.stack);
-    res.status(500).send('Couldn\'t initiate server.');
+    res.status(500).send('Error when handling request.');
 };
 
 export { errorHandler };

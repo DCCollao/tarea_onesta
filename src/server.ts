@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { openDatabase } from './db';
+import fruitsRouter from './routes/fruits';
 import { initDB } from './models/initDB';
 import { errorHandler } from './middlewares/errorHandler';
 
@@ -11,6 +12,7 @@ openDatabase();
 initDB();
 
 app.use(bodyParser.json());
+app.use('/fruits', fruitsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running in http://localhost:${PORT}`);

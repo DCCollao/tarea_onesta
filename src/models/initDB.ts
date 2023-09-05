@@ -10,7 +10,7 @@ export function initDB(): void {
        name TEXT UNIQUE NOT NULL
      )`,
 
-    // Ftuir Varieties
+    // Fruit Varieties
     `CREATE TABLE IF NOT EXISTS FruitVarieties (
        id INTEGER PRIMARY KEY,
        fruit_id INTEGER REFERENCES Fruits(id),
