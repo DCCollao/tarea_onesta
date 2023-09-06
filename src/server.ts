@@ -7,6 +7,7 @@ import farmersRouter from './routes/farmers';
 import fieldsRouter from './routes/fields';
 import harvestsRouter from './routes/harvests';
 import customersRouter from './routes/customers';
+import uploadsRouter from './routes/upload';
 import { initDB } from './models/initDB';
 import { errorHandler } from './middlewares/errorHandler';
 
@@ -23,7 +24,7 @@ app.use('/api/farmers', farmersRouter);
 app.use('/api/fields', fieldsRouter);
 app.use('/api/harvests', harvestsRouter);
 app.use('/api/customers', customersRouter);
-
+app.use('/api/upload-csv', uploadsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running in http://localhost:${PORT}`);

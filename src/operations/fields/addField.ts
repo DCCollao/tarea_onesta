@@ -1,30 +1,11 @@
 import { Request, Response } from 'express';
-import { getDatabase } from '../../db';
-import { isFieldNameLocationUnique } from '../../validations/fieldValidations';
+import { addFieldLogic } from './services/addFieldLogic';
 
-async function addField(req: Request, res: Response) {
-    const db = getDatabase();
-    const { name, location, farmer_id } = req.body;
-
+export async function addField(req: Request, res: Response) {
     try {
-        const unique = await isFieldNameLocationUnique(db, name, location);
-        
-        if (!unique) {
-            res.status(409).json({ error: 'Field name and location combination already exists.' });
-            return;
-        }
-
-        const sql = 'INSERT INTO Fields (name, location, farmer_id) VALUES (?, ?, ?)';
-        db.run(sql, [name, location, farmer_id], function(err) {
-            if (err) {
-                res.status(400).json({ error: err.message });
-                return;
-            }
-            res.json({ id: this.lastID });
-        });
-    } catch (err) {
-        res.status(500).json({ error: (err as Error).message });
+        const lastID = await addFieldLogic(req.body);
+        res.status(200).json({ id: lastID });
+    } catch (error) {
+        res.status(500).json({ error: 'Error adding field' });
     }
 }
-
-export { addField };
