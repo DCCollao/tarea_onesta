@@ -5,6 +5,7 @@ import { getFruitById } from '../operations/fruits/getFruitById';
 import { addFruit } from '../operations/fruits/addFruit';
 import { updateFruit } from '../operations/fruits/updateFruit';
 import { deleteFruit } from '../operations/fruits/deleteFruit';
+import { validateFruitSchema } from '../validations/fruitValidations';
 
 const router = express.Router();
 
@@ -15,10 +16,10 @@ router.get('/', getFruits);
 router.get('/:id', getFruitById);
 
 // POST: Add a new fruit
-router.post('/', addFruit);
+router.post('/', validateFruitSchema, addFruit);
 
 // PUT: Update a fruit by its ID
-router.put('/:id', updateFruit);
+router.put('/:id', validateFruitSchema, updateFruit);
 
 // DELETE: Delete a fruit by its ID
 router.delete('/:id', deleteFruit);
