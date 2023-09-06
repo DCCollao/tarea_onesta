@@ -3,6 +3,10 @@ import bodyParser from 'body-parser';
 import { openDatabase } from './db';
 import fruitsRouter from './routes/fruits';
 import fruitsVarietiesRouter from './routes/fruitVarieties';
+import farmersRouter from './routes/farmers';
+import fieldsRouter from './routes/fields';
+import harvestsRouter from './routes/harvests';
+import customersRouter from './routes/customers';
 import { initDB } from './models/initDB';
 import { errorHandler } from './middlewares/errorHandler';
 
@@ -13,8 +17,14 @@ openDatabase();
 initDB();
 
 app.use(bodyParser.json());
-app.use('/fruits', fruitsRouter);
-app.use('/fruitvarieties', fruitsVarietiesRouter);
+app.use('/api/fruits', fruitsRouter);
+app.use('/api/fruitvarieties', fruitsVarietiesRouter);
+app.use('/api/farmers', farmersRouter);
+app.use('/api/fields', fieldsRouter);
+app.use('/api/harvests', harvestsRouter);
+app.use('/api/customers', customersRouter);
+
+
 app.listen(PORT, () => {
   console.log(`Server running in http://localhost:${PORT}`);
 });
