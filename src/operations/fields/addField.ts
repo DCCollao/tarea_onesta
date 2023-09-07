@@ -1,11 +1,20 @@
 import { Request, Response } from 'express';
+import { getDatabase } from '../../db';
 import { addFieldLogic } from './services/addFieldLogic';
 
-export async function addField(req: Request, res: Response) {
+async function addField(req: Request, res: Response) {
+    const db = getDatabase();
+
     try {
-        const lastID = await addFieldLogic(req.body);
-        res.status(200).json({ id: lastID });
-    } catch (error) {
-        res.status(500).json({ error: 'Error adding field' });
+        const lastID = await addFieldLogic(db, req.body);
+        res.json({ id: lastID });
+    } catch (err) {
+        if ((err as Error).message === 'Field name and location combination already exists.') {
+            res.status(409).json({ error: (err as Error).message });
+        } else {
+            res.status(500).json({ error: (err as Error).message });
+        }
     }
 }
+
+export { addField };

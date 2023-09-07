@@ -1,10 +1,34 @@
-import { getDatabase } from '../../../db';
-import { runQuery } from '../../../utils/dbHelpers';
+import { Database } from 'sqlite3';
+import { isFarmerEmailUnique } from '../../../validations/farmerValidations';
+import { Farmer } from '../../../types/models';
 
-export async function addFarmerLogic(data: { name: string, email: string }): Promise<number> {
-    const db = getDatabase();
-    const { name, email } = data;
-    const sql = 'INSERT INTO Farmers (name, email) VALUES (?, ?)';
-    const lastID = await runQuery(db, sql, [name, email]);
-    return lastID;
+export async function addFarmerLogic(db: Database, data: { name: string; email: string; }): Promise<number> {
+    const unique = await isFarmerEmailUnique(db, data.email);
+    
+    if (unique) {
+        const sql = 'INSERT INTO Farmers (name, email) VALUES (?, ?)';
+        return new Promise<number>((resolve, reject) => {
+            db.run(sql, [data.name, data.email], function(err) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(this.lastID);
+                }
+            });
+        });
+    } else {
+        // Si el correo electrónico ya existe, obtén el ID del agricultor existente y devuélvelo
+        const sql = 'SELECT id FROM Farmers WHERE email = ?';
+        return new Promise<number>((resolve, reject) => {
+            db.get(sql, [data.email], (err, row: Farmer) => {
+                if (err) {
+                    reject(err);
+                } else if (row && row.id) {
+                    resolve(row.id);
+                } else {
+                    reject(new Error("Unable to retrieve farmer ID."));
+                }
+            });
+        });
+    }
 }

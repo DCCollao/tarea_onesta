@@ -1,12 +1,8 @@
 import { harvestSchema } from './schemas/harvest.schema';
-import { NextFunction, Response, Request } from 'express';
 
-function validateHarvestSchema(req: Request, res: Response, next: NextFunction) {
-  const { error } = harvestSchema.validate(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-  next();
+export function validateHarvestSchema(data: { variety_id: number; field_id: number; harvest_date: string; quantity: number }) {
+    const { error } = harvestSchema.validate(data);
+    if (error) {
+        throw new Error(`Validation error: ${error.details.map(x => x.message).join(', ')}`);
+    }
 }
-
-export { validateHarvestSchema };
