@@ -17,7 +17,6 @@ export async function addFarmerLogic(db: Database, data: { name: string; email: 
             });
         });
     } else {
-        // Si el correo electrónico ya existe, obtén el ID del agricultor existente y devuélvelo
         const sql = 'SELECT id FROM Farmers WHERE email = ?';
         return new Promise<number>((resolve, reject) => {
             db.get(sql, [data.email], (err, row: Farmer) => {

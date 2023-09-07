@@ -8,8 +8,13 @@ import fieldsRouter from './routes/fields';
 import harvestsRouter from './routes/harvests';
 import customersRouter from './routes/customers';
 import uploadsRouter from './routes/upload';
+
 import { initDB } from './models/initDB';
 import { errorHandler } from './middlewares/errorHandler';
+const YAML = require('yamljs');
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = YAML.load('src/api-docs.yaml');
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +30,9 @@ app.use('/api/fields', fieldsRouter);
 app.use('/api/harvests', harvestsRouter);
 app.use('/api/customers', customersRouter);
 app.use('/api/upload-csv', uploadsRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.listen(PORT, () => {
   console.log(`Server running in http://localhost:${PORT}`);

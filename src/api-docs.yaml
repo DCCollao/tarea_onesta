@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Onesta API
+  description: API for Onesta
+
+paths:
+  /customers:
+    post:
+      summary: Añade un nuevo cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del cliente
+                email:
+                  type: string
+                  description: Correo electrónico del cliente
+      responses:
+        '200':
+          description: Cliente añadido con éxito
+        '400':
+          description: Error en la validación
+
+    get:
+      summary: Obtiene todos los clientes
+      responses:
+        '200':
+          description: Lista de clientes
+
+  /farmers:
+    post:
+      summary: Añade un nuevo agricultor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del agricultor
+                email:
+                  type: string
+                  description: Correo electrónico del agricultor
+      responses:
+        '200':
+          description: Agricultor añadido con éxito
+        '400':
+          description: Error en la validación
+
+    get:
+      summary: Obtiene todos los agricultores
+      responses:
+        '200':
+          description: Lista de agricultores
+
+  /fields:
+    post:
+      summary: Añade un nuevo campo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del campo
+                location:
+                  type: string
+                  description: Ubicación del campo
+                farmer_id:
+                  type: integer
+                  description: ID del agricultor asociado
+      responses:
+        '200':
+          description: Campo añadido con éxito
+        '400':
+          description: Error en la validación
+
+    get:
+      summary: Obtiene todos los campos
+      responses:
+        '200':
+          description: Lista de campos
+
+  /fruitVarieties:
+    post:
+      summary: Añade una nueva variedad de fruta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la variedad
+                fruit_id:
+                  type: integer
+                  description: ID de la fruta asociada
+      responses:
+        '200':
+          description: Variedad añadida con éxito
+        '400':
+          description: Error en la validación
+
+    get:
+      summary: Obtiene todas las variedades de frutas
+      responses:
+        '200':
+          description: Lista de variedades
+
+  /fruits:
+    post:
+      summary: Añade una nueva fruta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la fruta
+      responses:
+        '200':
+          description: Fruta añadida con éxito
+        '400':
+          description: Error en la validación
+
+    get:
+      summary: Obtiene todas las frutas
+      responses:
+        '200':
+          description: Lista de frutas
+
+    put:
+      summary: Actualiza una fruta por su ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID de la fruta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre de la fruta
+      responses:
+        '200':
+          description: Fruta actualizada con éxito
+        '400':
+          description: Error en la validación
+
+    delete:
+      summary: Elimina una fruta por su ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID de la fruta
+      responses:
+        '200':
+          description: Fruta eliminada con éxito
+
+  /harvests:
+    post:
+      summary: Añade una nueva cosecha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variety_id:
+                  type: integer
+                  description: ID de la variedad
+                field_id:
+                  type: integer
+                  description: ID del campo
+                harvest_date:
+                  type: string
+                  format: date
+                  description: Fecha de la cosecha
+                quantity:
+                  type: integer
+                  description: Cantidad cosechada
+      responses:
+        '200':
+          description: Cosecha añadida con éxito
+        '400':
+          description: Error en la validación
+
+    get:
+      summary: Obtiene todas las cosechas
+      responses:
+        '200':
+          description: Lista de cosechas
+
+  /upload:
+    post:
+      summary: Procesa un archivo CSV subido
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Archivo CSV
+      responses:
+        '200':
+          description: Datos subidos con éxito
+        '400':
+          description: Error en la validación

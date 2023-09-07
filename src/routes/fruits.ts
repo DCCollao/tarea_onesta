@@ -9,19 +9,14 @@ import { validateFruitSchema } from '../validations/fruitValidations';
 
 const router = express.Router();
 
-// GET: Get all fruits
 router.get('/', getFruits);
 
-// GET: get a specific fruit by its ID
 router.get('/:id', getFruitById);
 
-// POST: Add a new fruit
 router.post('/', validateFruitSchema, addFruit);
 
-// PUT: Update a fruit by its ID
 router.put('/:id', validateFruitSchema, updateFruit);
 
-// DELETE: Delete a fruit by its ID
 router.delete('/:id', deleteFruit);
 
 export default router;

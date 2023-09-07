@@ -6,10 +6,8 @@ import { validateFruitVarietySchema } from '../validations/fruitVarietyValidatio
 
 const router = express.Router();
 
-// GET: Get all fruits
 router.get('/', getFruitVarieties);
 
-// POST: Add a new fruit
 router.post('/', validateFruitVarietySchema, addFruitVariety);
 
 export default router;

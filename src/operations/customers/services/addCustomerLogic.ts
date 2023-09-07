@@ -17,7 +17,6 @@ export async function addCustomerLogic(db: Database, data: { name: string; email
             });
         });
     } else {
-        // Si el correo electrónico ya existe, obtén el ID del cliente existente y devuélvelo
         const sql = 'SELECT id FROM Customers WHERE email = ?';
         return new Promise<number>((resolve, reject) => {
             db.get(sql, [data.email], (err, row: Customer) => {

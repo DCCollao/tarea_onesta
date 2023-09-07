@@ -56,13 +56,11 @@ async function processCSV(req: Request, res: Response) {
                     });
                     await addHarvestLogic(db, harvestReq.body);
 
-                    // Insertar fruta
                     const fruitReq = createPayload({
                         name: csvRow['Fruta Cosechada']
                     });
                     const lastFruitID = await addFruitLogic(db, fruitReq.body);
 
-                    // Insertar variedad
                     const varietyReq = createPayload({
                         fruit_id: lastFruitID,
                         variety: csvRow['Variedad Cosechada']

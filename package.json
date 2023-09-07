@@ -32,8 +32,11 @@
     "papaparse": "^5.4.1",
     "sqlite": "^5.0.1",
     "sqlite3": "^5.1.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/hapi__joi": "^17.1.10",

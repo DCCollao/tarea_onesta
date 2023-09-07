@@ -17,7 +17,6 @@ export async function addFieldLogic(db: Database, data: { name: string; location
             });
         });
     } else {
-        // Si la combinación de nombre y ubicación ya existe, obtén el ID del campo existente y devuélvelo
         const sql = 'SELECT id FROM Fields WHERE name = ? AND location = ?';
         return new Promise<number>((resolve, reject) => {
             db.get(sql, [data.name, data.location], (err, row: Field) => {
